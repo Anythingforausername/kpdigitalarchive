@@ -59,18 +59,24 @@ document.addEventListener('DOMContentLoaded', () => {
     animatedElements.forEach(el => observer.observe(el));
 });
 
-// Parallax effect for hero section
+// Enhanced parallax effect for hero section with blue orb background
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
     const parallaxElements = document.querySelectorAll('.floating-card');
     
     parallaxElements.forEach((element, index) => {
-        const speed = 0.5 + (index * 0.1);
-        element.style.transform = `translateY(${scrolled * speed}px)`;
+        const speed = 0.3 + (index * 0.1);
+        const rotation = scrolled * 0.1;
+        element.style.transform = `translateY(${scrolled * speed}px) rotate(${rotation}deg)`;
     });
+    
+    // Add subtle parallax to the background orbs
+    const body = document.body;
+    const orbSpeed = scrolled * 0.1;
+    body.style.setProperty('--orb-offset', `${orbSpeed}px`);
 });
 
-// Typing effect for hero title
+// Enhanced typing effect for hero title with monospace styling
 function typeWriter(element, text, speed = 100) {
     let i = 0;
     element.innerHTML = '';
@@ -80,6 +86,9 @@ function typeWriter(element, text, speed = 100) {
             element.innerHTML += text.charAt(i);
             i++;
             setTimeout(type, speed);
+        } else {
+            // Add a blinking cursor effect
+            element.innerHTML += '<span class="cursor">|</span>';
         }
     }
     
@@ -91,7 +100,7 @@ window.addEventListener('load', () => {
     const heroTitle = document.querySelector('.hero-title');
     if (heroTitle) {
         const originalText = heroTitle.textContent;
-        typeWriter(heroTitle, originalText, 80);
+        typeWriter(heroTitle, originalText, 120);
     }
 });
 
@@ -143,23 +152,15 @@ document.querySelectorAll('.experience-card, .hobby-card, .travel-card, .blog-ca
     });
 });
 
-// Social media link handlers (you can replace with actual URLs)
+// Social media link handlers - now using actual URLs from HTML
 document.querySelectorAll('.social-link').forEach(link => {
     link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const platform = this.classList[1]; // Gets 'instagram', 'snapchat', etc.
-        
-        // Replace with your actual social media usernames/URLs
-        const socialUrls = {
-            instagram: 'https://instagram.com/yourusername',
-            snapchat: 'https://snapchat.com/add/yourusername',
-            twitter: 'https://twitter.com/yourusername',
-            tiktok: 'https://tiktok.com/@yourusername'
-        };
-        
-        if (socialUrls[platform]) {
-            window.open(socialUrls[platform], '_blank');
-        }
+        // Let the default behavior handle the actual URLs
+        // Just add some visual feedback
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            this.style.transform = '';
+        }, 150);
     });
 });
 
