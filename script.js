@@ -1,269 +1,179 @@
-// Mobile Navigation Toggle
-const hamburger = document.querySelector('.hamburger');
-const navMenu = document.querySelector('.nav-menu');
 
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
+<script>
+// Halftone canvas animation
+const canvas = document.getElementById('halftone');
+const ctx = canvas.getContext('2d');
 
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    navMenu.classList.remove('active');
-}));
-
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-
-// Navbar background change on scroll
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-    } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-        navbar.style.boxShadow = 'none';
-    }
-});
-
-// Intersection Observer for fade-in animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in-up');
-        }
-    });
-}, observerOptions);
-
-// Observe elements for animation
-document.addEventListener('DOMContentLoaded', () => {
-    const animatedElements = document.querySelectorAll('.experience-card, .hobby-card, .travel-card, .blog-card, .social-link, .stat');
-    animatedElements.forEach(el => observer.observe(el));
-});
-
-// Enhanced parallax effect for hero section with blue orb background
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const parallaxElements = document.querySelectorAll('.floating-card');
-    
-    parallaxElements.forEach((element, index) => {
-        const speed = 0.3 + (index * 0.1);
-        const rotation = scrolled * 0.1;
-        element.style.transform = `translateY(${scrolled * speed}px) rotate(${rotation}deg)`;
-    });
-    
-    // Add subtle parallax to the background orbs
-    const body = document.body;
-    const orbSpeed = scrolled * 0.1;
-    body.style.setProperty('--orb-offset', `${orbSpeed}px`);
-});
-
-// Enhanced typing effect for hero title with monospace styling
-function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    element.innerHTML = '';
-    
-    function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        } else {
-            // Add a blinking cursor effect
-            element.innerHTML += '<span class="cursor">|</span>';
-        }
-    }
-    
-    type();
+function resizeCanvas() {
+    canvas.width = window.innerWidth * 0.6;
+    canvas.height = window.innerHeight;
 }
 
-// Initialize typing effect when page loads
-window.addEventListener('load', () => {
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-        const originalText = heroTitle.textContent;
-        typeWriter(heroTitle, originalText, 120);
-    }
-});
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
 
-// Counter animation for stats
-function animateCounter(element, target, duration = 2000) {
-    let start = 0;
-    const increment = target / (duration / 16);
+function drawHalftone() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    function updateCounter() {
-        start += increment;
-        if (start < target) {
-            element.textContent = Math.floor(start) + '+';
-            requestAnimationFrame(updateCounter);
-        } else {
-            element.textContent = target + '+';
-        }
-    }
+    const dotSize = 3;
+    const spacing = 6;
+    const time = Date.now() * 0.0005;
     
-    updateCounter();
-}
-
-// Animate counters when they come into view
-const counterObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const counters = entry.target.querySelectorAll('.stat h3');
-            counters.forEach(counter => {
-                const target = parseInt(counter.textContent);
-                animateCounter(counter, target);
-            });
-            counterObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.5 });
-
-const statsSection = document.querySelector('.about-stats');
-if (statsSection) {
-    counterObserver.observe(statsSection);
-}
-
-// Add hover effects to cards
-document.querySelectorAll('.experience-card, .hobby-card, .travel-card, .blog-card').forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-10px) scale(1.02)';
-    });
-    
-    card.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0) scale(1)';
-    });
-});
-
-// Social media link handlers - now using actual URLs from HTML
-document.querySelectorAll('.social-link').forEach(link => {
-    link.addEventListener('click', function(e) {
-        // Let the default behavior handle the actual URLs
-        // Just add some visual feedback
-        this.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-            this.style.transform = '';
-        }, 150);
-    });
-});
-
-// Add loading animation
-window.addEventListener('load', () => {
-    document.body.classList.add('loaded');
-});
-
-// Add scroll progress indicator
-function createScrollProgress() {
-    const progressBar = document.createElement('div');
-    progressBar.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 0%;
-        height: 3px;
-        background: linear-gradient(90deg, #2563eb, #3b82f6);
-        z-index: 9999;
-        transition: width 0.1s ease;
-    `;
-    document.body.appendChild(progressBar);
-    
-    window.addEventListener('scroll', () => {
-        const scrollTop = window.pageYOffset;
-        const docHeight = document.body.scrollHeight - window.innerHeight;
-        const scrollPercent = (scrollTop / docHeight) * 100;
-        progressBar.style.width = scrollPercent + '%';
-    });
-}
-
-// Initialize scroll progress
-createScrollProgress();
-
-// Add smooth reveal animation for sections
-const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, { threshold: 0.1 });
-
-// Apply reveal animation to sections
-document.querySelectorAll('section').forEach(section => {
-    section.style.opacity = '0';
-    section.style.transform = 'translateY(30px)';
-    section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    revealObserver.observe(section);
-});
-
-// Add click-to-copy functionality for social usernames
-document.querySelectorAll('.social-link p').forEach(username => {
-    username.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const text = this.textContent;
-        navigator.clipboard.writeText(text).then(() => {
-            // Show a temporary tooltip
-            const tooltip = document.createElement('div');
-            tooltip.textContent = 'Copied!';
-            tooltip.style.cssText = `
-                position: absolute;
-                background: #1f2937;
-                color: white;
-                padding: 5px 10px;
-                border-radius: 5px;
-                font-size: 12px;
-                z-index: 1000;
-                pointer-events: none;
-            `;
-            document.body.appendChild(tooltip);
+    for (let x = 0; x < canvas.width; x += spacing) {
+        for (let y = 0; y < canvas.height; y += spacing) {
+            // Create horizontal ocean wave pattern
+            const wave1 = Math.sin(y * 0.015 + time * 2);
+            const wave2 = Math.sin(y * 0.025 + x * 0.008 + time * 1.5);
+            const wave3 = Math.cos(y * 0.01 + time);
             
-            const rect = this.getBoundingClientRect();
-            tooltip.style.left = rect.left + 'px';
-            tooltip.style.top = (rect.top - 30) + 'px';
+            const combinedWave = (wave1 + wave2 * 0.5 + wave3 * 0.3) / 1.8;
+            const waveIntensity = (combinedWave + 1) / 2;
             
-            setTimeout(() => {
-                document.body.removeChild(tooltip);
-            }, 2000);
+            // Vary dot size and opacity based on wave
+            const size = dotSize * (0.3 + waveIntensity * 0.9);
+            const alpha = 0.2 + waveIntensity * 0.5;
+            
+            // Blue gradient from light to dark
+            const r = 0;
+            const g = Math.floor(100 + waveIntensity * 150);
+            const b = 255;
+            
+            ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+            ctx.beginPath();
+            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+    
+    requestAnimationFrame(drawHalftone);
+}
+
+drawHalftone();
+
+// Hobby window click handlers
+const hobbyWindows = document.querySelectorAll('.hobby-window');
+const mainContent = document.getElementById('main-content');
+const blogSections = document.querySelectorAll('.blog-section');
+
+hobbyWindows.forEach(window => {
+    window.addEventListener('click', function() {
+        const hobby = this.getAttribute('data-hobby');
+        showBlog(hobby);
+    });
+});
+
+function showBlog(hobby) {
+    mainContent.style.display = 'none';
+    blogSections.forEach(section => section.classList.remove('active'));
+    document.getElementById(`blog-${hobby}`).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showMain() {
+    blogSections.forEach(section => section.classList.remove('active'));
+    mainContent.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Update Recent Photos gallery with most recent images from all hobbies
+function updateRecentPhotos() {
+    const recentGallery = document.querySelector('.gallery-grid');
+    const allBlogImages = document.querySAll('.blog-image-item img');
+    
+    // Clear current gallery
+    recentGallery.innerHTML = '';
+    
+    // Collect all images from hobby blogs
+    const allImages = [];
+    document.querySelectorAll('.blog-image-grid').forEach(grid => {
+        const hobby = grid.getAttribute('data-hobby');
+        const images = grid.querySelectorAll('.blog-image-item');
+        images.forEach((img, index) => {
+            if (img.querySelector('img')) {
+                allImages.push({
+                    element: img.cloneNode(true),
+                    hobby: hobby,
+                    index: index
+                });
+            }
         });
     });
-});
+    
+    // Get the 8 most recent images (or however many exist)
+    const recentImages = allImages.slice(-8).reverse();
+    
+    // Populate recent photos gallery
+    if (recentImages.length > 0) {
+        recentImages.forEach(imgData => {
+            recentGallery.appendChild(imgData.element);
+        });
+    } else {
+        // Show placeholders if no images exist
+        for (let i = 1; i <= 8; i++) {
+            const placeholder = document.createElement('div');
+            placeholder.className = 'gallery-item';
+            placeholder.textContent = `Photo ${i}`;
+            recentGallery.appendChild(placeholder);
+        }
+    }
+}
 
-// Add keyboard navigation support
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        // Close mobile menu on escape
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
+// Call on page load
+window.addEventListener('load', updateRecentPhotos);
+
+// Photo Modal Functions
+function openPhotoModal(imageSrc, title, description) {
+    const modal = document.getElementById('photoModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    
+    modalImage.src = imageSrc;
+    modalTitle.textContent = title;
+    modalDesc.textContent = description;
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closePhotoModal() {
+    const modal = document.getElementById('photoModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+// Close modal on background click
+document.getElementById('photoModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closePhotoModal();
     }
 });
 
-// Add focus styles for accessibility
-document.querySelectorAll('a, button').forEach(element => {
-    element.addEventListener('focus', function() {
-        this.style.outline = '2px solid #2563eb';
-        this.style.outlineOffset = '2px';
-    });
-    
-    element.addEventListener('blur', function() {
-        this.style.outline = 'none';
-    });
+// Close modal on ESC key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closePhotoModal();
+    }
 });
 
+// Add click handlers to all blog images
+function initializePhotoClicks() {
+    document.querySelectorAll('.blog-image-item, .gallery-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const img = this.querySelector('img');
+            if (img) {
+                const title = this.getAttribute('data-title') || 'Untitled Photo';
+                const description = this.getAttribute('data-description') || 'No description available.';
+                openPhotoModal(img.src, title, description);
+            }
+        });
+    });
+}
+
+// Initialize on load and after blog navigation
+window.addEventListener('load', initializePhotoClicks);
+
 console.log('Digital Archive website loaded successfully! 🚀');
+</script>
+</body>
+</html>
