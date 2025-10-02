@@ -1,142 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>kp.archive.blog</title>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creative Blog</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <canvas class="halftone-bg" id="halftone"></canvas>
+  <header>
+    <h1>Creative Blog</h1>
+    <nav>
+      <ul>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <div class="container">
-        <header>
-            <div class="logo">kp.archive.blog</div>
-        </header>
+  <main>
+    <!-- Blog Section -->
+    <section id="blog">
+      <h2>Latest Posts</h2>
+      <div class="blog-container">
+        <article class="blog-post">
+          <h3>Sketching Ideas</h3>
+          <p>Exploring new styles with pencil sketches and ink drawings.</p>
+          <div class="blog-image-grid" data-hobby="Sketching">
+            <div class="blog-image-item"><img src="https://via.placeholder.com/200" alt="Sketch 1"></div>
+            <div class="blog-image-item"><img src="https://via.placeholder.com/200" alt="Sketch 2"></div>
+          </div>
+        </article>
 
-        <main>
-            <div id="main-content">
-                <div class="welcome-video">
-                    <p>Welcome Video Placeholder</p>
-                </div>
+        <article class="blog-post">
+          <h3>Painting Sessions</h3>
+          <p>Experimenting with watercolors and acrylic paints.</p>
+          <div class="blog-image-grid" data-hobby="Painting">
+            <div class="blog-image-item"><img src="https://via.placeholder.com/200" alt="Painting 1"></div>
+            <div class="blog-image-item"><img src="https://via.placeholder.com/200" alt="Painting 2"></div>
+          </div>
+        </article>
+      </div>
+    </section>
 
-                <section class="intro">
-                    <h1>
-                        KRISH PATEL<br>
-                        DIGITAL ARCHIVIST<br>
-                        CREATOR
-                    </h1>
+    <!-- Gallery Section -->
+    <section id="gallery">
+      <h2>Recent Works</h2>
+      <div class="gallery-grid"></div>
+    </section>
 
-                    <div class="experience-list">
-                        <p>Description</p>
-                    </div>
-                </section>
+    <!-- About Section -->
+    <section id="about">
+      <h2>About Me</h2>
+      <p>I enjoy sketching, painting, and exploring different creative outlets.</p>
+    </section>
+  </main>
 
-                <section class="hobby-windows">
-                    <div class="hobby-window" data-hobby="music">
-                        <h3>Music & Guitar</h3>
-                        <p>Acoustic and electric guitar. Composition and improvisation.</p>
-                    </div>
-                    <div class="hobby-window" data-hobby="exploration">
-                        <h3>Exploration</h3>
-                        <p>Outdoor expeditions and discovering new environments. Pushing boundaries.</p>
-                    </div>
-                    <div class="hobby-window" data-hobby="hiking">
-                        <h3>Hiking</h3>
-                        <p>Trail exploration and summits. Connecting with nature.</p>
-                    </div>
-                    <div class="hobby-window" data-hobby="travel">
-                        <h3>Travel</h3>
-                        <p>Exploring new destinations and cultures. Documenting journeys worldwide.</p>
-                    </div>
-                    <div class="hobby-window" data-hobby="fitness">
-                        <h3>Fitness</h3>
-                        <p>Strength training and cardio. Maintaining physical wellness.</p>
-                    </div>
-                    <div class="hobby-window" data-hobby="skateboarding">
-                        <h3>Skateboarding</h3>
-                        <p>Street skating and freestyle. Pushing limits on four wheels.</p>
-                    </div>
-                    <div class="hobby-window" data-hobby="photography">
-                        <h3>Photography</h3>
-                        <p>Capturing moments through the lens. Street, landscape, and portrait work.</p>
-                    </div>
-                    <div class="hobby-window" data-hobby="videography">
-                        <h3>Videography</h3>
-                        <p>Visual storytelling and cinematography. Creating compelling narratives.</p>
-                    </div>
-                </section>
-
-                <section class="photo-gallery">
-                    <h3 class="gallery-title">Recent Photos</h3>
-                    <div class="gallery-grid">
-                        <div class="gallery-item">Photo 1</div>
-                        <div class="gallery-item">Photo 2</div>
-                        <div class="gallery-item">Photo 3</div>
-                        <div class="gallery-item">Photo 4</div>
-                        <div class="gallery-item">Photo 5</div>
-                        <div class="gallery-item">Photo 6</div>
-                        <div class="gallery-item">Photo 7</div>
-                        <div class="gallery-item">Photo 8</div>
-                    </div>
-                </section>
-            </div>
-
-            <!-- Example blog section (others follow same pattern) -->
-            <div class="blog-section" id="blog-music">
-                <div class="blog-header">
-                    <h2>Music & Guitar</h2>
-                    <div class="blog-meta">Updated regularly</div>
-                </div>
-                <div class="blog-content">
-                    <p>Guitar has been my constant companion for the past 5+ years. Started with basic chords and campfire songs, but gradually developed a deeper appreciation for music theory and technique.</p>
-                    <p>I play both acoustic and electric, though I lean towards acoustic for its portability and warmth. Fingerpicking patterns and percussive techniques have become recent obsessions.</p>
-                    <p>Music is meditative for me—a way to disconnect from screens and engage with something purely tactile and auditory. There's always another song to learn, another technique to master.</p>
-                    
-                    <div class="blog-images">
-                        <h3>Guitar & Music</h3>
-                        <div class="blog-image-grid" data-hobby="music">
-                            <div class="blog-image-item">Music 1</div>
-                            <div class="blog-image-item">Music 2</div>
-                            <div class="blog-image-item">Music 3</div>
-                            <div class="blog-image-item">Music 4</div>
-                            <div class="blog-image-item">Music 5</div>
-                            <div class="blog-image-item">Music 6</div>
-                        </div>
-                    </div>
-                </div>
-                <button class="back-btn" onclick="showMain()">← Back</button>
-            </div>
-        </main>
-
-        <footer>
-            <div class="footer-content">
-                <div class="email">
-                    <a href="mailto:thegamerk07@outlook.com">thegamerk07@outlook.com</a>
-                </div>
-                <div class="links">
-                    <span style="opacity: 0.6;">Socials</span>
-                    <a href="https://www.instagram.com/anythingforausername/" target="_blank">Instagram</a>
-                    <a href="https://www.snapchat.com/@anytngforausrnm" target="_blank">Snapchat</a>
-                    <a href="https://www.youtube.com/@anything_for_a_username" target="_blank">YouTube</a>
-                    <a href="https://www.tiktok.com/@anythingforausern" target="_blank">TikTok</a>
-                </div>
-            </div>
-        </footer>
+  <!-- Modal -->
+  <div id="photoModal" class="photo-modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closePhotoModal()">&times;</span>
+      <img id="modalImage" class="modal-image" src="" alt="">
+      <div class="modal-text">
+        <h3 id="modalTitle"></h3>
+        <p id="modalDesc"></p>
+      </div>
     </div>
+  </div>
 
-    <div class="photo-modal" id="photoModal">
-        <button class="modal-close" onclick="closePhotoModal()">×</button>
-        <div class="modal-content">
-            <img class="modal-image" id="modalImage" src="" alt="">
-            <div class="modal-description">
-                <h3 id="modalTitle">Photo Title</h3>
-                <p id="modalDesc">Photo description goes here...</p>
-            </div>
-        </div>
-    </div>
+  <footer>
+    <p>&copy; 2025 Creative Blog</p>
+  </footer>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
+
