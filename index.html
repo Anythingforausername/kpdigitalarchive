@@ -5,26 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kp.archive</title>
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> <!-- Linked CSS file -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Halftone Background -->
     <canvas class="halftone-bg" id="halftone"></canvas>
 
     <div class="container">
         <header>
             <div class="logo">kp.archive.blog</div>
-            <!-- If you want a theme toggle, you'd add it here and implement its JS in script.js -->
-            <!-- <button class="theme-toggle">☀️</button> -->
         </header>
 
         <main>
             <div id="main-content">
-                <!-- Welcome Video -->
                 <div class="welcome-video">
                     <p>Welcome Video Placeholder</p>
-                    <!-- To use a video, uncomment and replace 'your-video.mp4' -->
-                    <!-- <video src="your-video.mp4" controls muted loop playsinline></video> -->
                 </div>
 
                 <section class="intro">
@@ -35,7 +29,7 @@
                     </h1>
 
                     <div class="experience-list">
-                        <p>Description: I'm a passionate digital archivist and content creator, documenting my journey through various creative and adventurous pursuits.</p>
+                        <p>Description</p>
                     </div>
                 </section>
 
@@ -74,15 +68,9 @@
                     </div>
                 </section>
 
-                <!-- Photo Gallery -->
                 <section class="photo-gallery">
                     <h3 class="gallery-title">Recent Photos</h3>
                     <div class="gallery-grid">
-                        <!-- Photos from blog sections will be dynamically inserted here by JavaScript -->
-                        <!-- Example of an actual image item: -->
-                        <!-- <div class="gallery-item" data-title="City Lights" data-description="A vibrant shot of the city at dusk.">
-                            <img src="images/photo1.jpg" alt="City Lights">
-                        </div> -->
                         <div class="gallery-item">Photo 1</div>
                         <div class="gallery-item">Photo 2</div>
                         <div class="gallery-item">Photo 3</div>
@@ -95,7 +83,6 @@
                 </section>
             </div>
 
-            <!-- Blog Sections (Hidden by default) -->
             <div class="blog-section" id="blog-photography">
                 <div class="blog-header">
                     <h2>Photography</h2>
@@ -108,14 +95,8 @@
                     <div class="blog-images">
                         <h3>Recent Photography</h3>
                         <div class="blog-image-grid" data-hobby="photography">
-                            <!-- Replace placeholders with actual images -->
-                            <!-- Example: -->
-                            <div class="blog-image-item" data-title="Golden Hour City" data-description="Capturing the city bathed in warm light.">
-                                <img src="images/photography/photo1.jpg" alt="Golden Hour City">
-                            </div>
-                            <div class="blog-image-item" data-title="Old Town Alley" data-description="Exploring the charming narrow streets.">
-                                <img src="images/photography/photo2.jpg" alt="Old Town Alley">
-                            </div>
+                            <div class="blog-image-item">Photo 1</div>
+                            <div class="blog-image-item">Photo 2</div>
                             <div class="blog-image-item">Photo 3</div>
                             <div class="blog-image-item">Photo 4</div>
                         </div>
@@ -138,7 +119,6 @@
                     <div class="blog-images">
                         <h3>Recent Videos</h3>
                         <div class="blog-image-grid" data-hobby="videography">
-                            <!-- Replace placeholders with actual video thumbnails or images -->
                             <div class="blog-image-item">Video 1</div>
                             <div class="blog-image-item">Video 2</div>
                             <div class="blog-image-item">Video 3</div>
@@ -165,7 +145,6 @@
                     <div class="blog-images">
                         <h3>Guitar & Music</h3>
                         <div class="blog-image-grid" data-hobby="music">
-                            <!-- Replace placeholders with actual images -->
                             <div class="blog-image-item">Music 1</div>
                             <div class="blog-image-item">Music 2</div>
                             <div class="blog-image-item">Music 3</div>
@@ -262,11 +241,10 @@
         </footer>
     </div>
 
-    <!-- Photo Modal -->
     <div class="photo-modal" id="photoModal">
         <button class="modal-close" onclick="closePhotoModal()">×</button>
         <div class="modal-content">
-            <img class="modal-image" id="modalImage" src="" alt="Modal Image">
+            <img class="modal-image" id="modalImage" src="" alt="">
             <div class="modal-description">
                 <h3 id="modalTitle">Photo Title</h3>
                 <p id="modalDesc">Photo description goes here...</p>
@@ -274,6 +252,6 @@
         </div>
     </div>
 
-    <script src="script.js"></script> <!-- Linked JavaScript file -->
+    <script src="script.js"></script>
 </body>
 </html>
