@@ -1,737 +1,429 @@
-/* Reset and Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-body {
-    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
-    line-height: 1.6;
-    color: #ffffff;
-    background: #000000;
-    overflow-x: hidden;
-    position: relative;
-}
-
-/* Animated Blue Orbs Background */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        radial-gradient(circle at 20% 20%, rgba(0, 191, 255, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(0, 150, 255, 0.4) 0%, transparent 50%),
-        radial-gradient(circle at 40% 60%, rgba(0, 200, 255, 0.2) 0%, transparent 50%),
-        radial-gradient(circle at 60% 30%, rgba(0, 120, 255, 0.3) 0%, transparent 50%);
-    animation: orbFloat 20s ease-in-out infinite;
-    z-index: -2;
-}
-
-/* Grainy texture overlay */
-body::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0);
-    background-size: 20px 20px;
-    animation: grain 0.8s steps(10) infinite;
-    z-index: -1;
-    pointer-events: none;
-}
-
-@keyframes orbFloat {
-    0%, 100% { 
-        transform: translate(0, 0) scale(1);
-        filter: blur(0px);
-    }
-    25% { 
-        transform: translate(30px, -20px) scale(1.1);
-        filter: blur(1px);
-    }
-    50% { 
-        transform: translate(-20px, 30px) scale(0.9);
-        filter: blur(0.5px);
-    }
-    75% { 
-        transform: translate(40px, 10px) scale(1.05);
-        filter: blur(0.8px);
-    }
-}
-
-@keyframes grain {
-    0%, 100% { transform: translate(0, 0); }
-    10% { transform: translate(-5%, -10%); }
-    20% { transform: translate(-15%, 5%); }
-    30% { transform: translate(7%, -25%); }
-    40% { transform: translate(-5%, 25%); }
-    50% { transform: translate(-15%, 10%); }
-    60% { transform: translate(15%, 0%); }
-    70% { transform: translate(0%, 15%); }
-    80% { transform: translate(3%, 35%); }
-    90% { transform: translate(-10%, 10%); }
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* Navigation */
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(20px);
-    z-index: 1000;
-    transition: all 0.3s ease;
-    border-bottom: 1px solid rgba(0, 191, 255, 0.2);
-}
-
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 70px;
-}
-
-.nav-logo h2 {
-    color: #00bfff;
-    font-weight: 700;
-    font-size: 1.5rem;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 1px;
-}
-
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: #ffffff;
-    font-weight: 400;
-    transition: all 0.3s ease;
-    position: relative;
-    font-size: 0.9rem;
-    letter-spacing: 0.5px;
-}
-
-.nav-link:hover {
-    color: #00bfff;
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 1px;
-    bottom: -5px;
-    left: 0;
-    background-color: #00bfff;
-    transition: width 0.3s ease;
-}
-
-.nav-link:hover::after {
-    width: 100%;
-}
-
-.hamburger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.bar {
-    width: 25px;
-    height: 2px;
-    background-color: #ffffff;
-    margin: 3px 0;
-    transition: 0.3s;
-}
-
-/* Hero Section */
-.hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    background: transparent;
-    color: white;
-    position: relative;
-    overflow: hidden;
-    padding: 0 20px;
-}
-
-.hero-content {
-    flex: 1;
-    max-width: 600px;
-    z-index: 2;
-}
-
-.hero-title {
-    font-size: 4rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    line-height: 1.1;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 2px;
-    color: #00bfff;
-    text-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
-}
-
-.hero-subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-    opacity: 0.8;
-    font-weight: 300;
-    letter-spacing: 1px;
-    line-height: 1.6;
-}
-
-.hero-buttons {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.btn {
-    padding: 12px 30px;
-    border-radius: 0;
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    display: inline-block;
-    border: 1px solid #00bfff;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-}
-
-.btn-primary {
-    background: #00bfff;
-    color: #000000;
-}
-
-.btn-primary:hover {
-    background: transparent;
-    color: #00bfff;
-    box-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
-}
-
-.btn-secondary {
-    background: transparent;
-    color: #00bfff;
-}
-
-.btn-secondary:hover {
-    background: #00bfff;
-    color: #000000;
-    box-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
-}
-
-.hero-image {
-    flex: 1;
-    position: relative;
-    height: 500px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.floating-card {
-    position: absolute;
-    background: rgba(0, 191, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 20px;
-    border-radius: 0;
-    text-align: center;
-    animation: float 6s ease-in-out infinite;
-    border: 1px solid rgba(0, 191, 255, 0.3);
-    font-family: 'JetBrains Mono', monospace;
-}
-
-.floating-card:nth-child(1) {
-    top: 20%;
-    left: 10%;
-    animation-delay: 0s;
-}
-
-.floating-card:nth-child(2) {
-    top: 50%;
-    right: 20%;
-    animation-delay: 2s;
-}
-
-.floating-card:nth-child(3) {
-    bottom: 20%;
-    left: 30%;
-    animation-delay: 4s;
-}
-
-.floating-card i {
-    font-size: 2rem;
-    margin-bottom: 10px;
-    display: block;
-    color: #00bfff;
-}
-
-.floating-card span {
-    color: #ffffff;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(2deg); }
-}
-
-/* Section Styles */
-section {
-    padding: 80px 0;
-    position: relative;
-    z-index: 1;
-}
-
-.section-title {
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 3rem;
-    color: #00bfff;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 2px;
-    text-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
-}
-
-/* About Section */
-.about {
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(10px);
-}
-
-.about-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 4rem;
-    align-items: center;
-}
-
-.about-text p {
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
-    color: #cccccc;
-    line-height: 1.8;
-    letter-spacing: 0.5px;
-}
-
-.about-stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-}
-
-.stat {
-    text-align: center;
-    padding: 2rem;
-    background: rgba(0, 191, 255, 0.1);
-    border-radius: 0;
-    border: 1px solid rgba(0, 191, 255, 0.3);
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-}
-
-.stat:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 191, 255, 0.2);
-}
-
-.stat h3 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #00bfff;
-    margin-bottom: 0.5rem;
-    font-family: 'JetBrains Mono', monospace;
-}
-
-.stat p {
-    color: #cccccc;
-    font-weight: 400;
-    letter-spacing: 1px;
-}
-
-/* Experiences Section */
-.experiences-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.experience-card {
-    background: rgba(0, 0, 0, 0.8);
-    padding: 2.5rem;
-    border-radius: 0;
-    text-align: center;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(0, 191, 255, 0.2);
-    backdrop-filter: blur(10px);
-}
-
-.experience-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 191, 255, 0.1);
-    border-color: rgba(0, 191, 255, 0.5);
-}
-
-.card-icon {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, #00bfff, #0099cc);
-    border-radius: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem;
-}
-
-.card-icon i {
-    font-size: 2rem;
-    color: #000000;
-}
-
-.experience-card h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: #ffffff;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 1px;
-}
-
-.experience-card p {
-    color: #cccccc;
-    line-height: 1.6;
-    letter-spacing: 0.5px;
-}
-
-/* Travel Section */
-.travel {
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(10px);
-}
-
-.travel-intro {
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-.travel-intro p {
-    font-size: 1.2rem;
-    color: #cccccc;
-    max-width: 600px;
-    margin: 0 auto;
-    letter-spacing: 0.5px;
-    line-height: 1.8;
-}
-
-.travel-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-}
-
-.travel-card {
-    background: rgba(0, 0, 0, 0.8);
-    border-radius: 0;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(0, 191, 255, 0.2);
-    backdrop-filter: blur(10px);
-}
-
-.travel-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 191, 255, 0.1);
-    border-color: rgba(0, 191, 255, 0.5);
-}
-
-.travel-image {
-    height: 150px;
-    background: linear-gradient(135deg, #00bfff, #0099cc);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.travel-image i {
-    font-size: 3rem;
-    color: #000000;
-}
-
-.travel-card h3 {
-    padding: 1.5rem 1.5rem 0.5rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #ffffff;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 1px;
-}
-
-.travel-card p {
-    padding: 0 1.5rem 1.5rem;
-    color: #cccccc;
-    letter-spacing: 0.5px;
-}
-
-/* Hobbies Section */
-.hobbies-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
-
-.hobby-card {
-    background: rgba(0, 0, 0, 0.8);
-    padding: 2rem;
-    border-radius: 0;
-    text-align: center;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(0, 191, 255, 0.2);
-    backdrop-filter: blur(10px);
-}
-
-.hobby-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 191, 255, 0.1);
-    border-color: rgba(0, 191, 255, 0.5);
-}
-
-.hobby-icon {
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(135deg, #00bfff, #0099cc);
-    border-radius: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem;
-}
-
-.hobby-icon i {
-    font-size: 1.75rem;
-    color: #000000;
-}
-
-.hobby-card h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: #ffffff;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 1px;
-}
-
-.hobby-card p {
-    color: #cccccc;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-    letter-spacing: 0.5px;
-}
-
-.hobby-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-}
-
-.tag {
-    background: rgba(0, 191, 255, 0.2);
-    color: #00bfff;
-    padding: 0.25rem 0.75rem;
-    border-radius: 0;
-    font-size: 0.875rem;
-    font-weight: 500;
-    border: 1px solid rgba(0, 191, 255, 0.3);
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.5px;
-}
-
-/* Blog Section */
-.blog {
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(10px);
-}
-
-.blog-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-}
-
-.blog-card {
-    background: rgba(0, 0, 0, 0.8);
-    border-radius: 0;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(0, 191, 255, 0.2);
-    backdrop-filter: blur(10px);
-}
-
-.blog-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 191, 255, 0.1);
-    border-color: rgba(0, 191, 255, 0.5);
-}
-
-.blog-image {
-    height: 150px;
-    background: linear-gradient(135deg, #00bfff, #0099cc);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.blog-image i {
-    font-size: 3rem;
-    color: #000000;
-}
-
-.blog-content {
-    padding: 1.5rem;
-}
-
-.blog-content h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: #ffffff;
-    line-height: 1.4;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 1px;
-}
-
-.blog-content p {
-    color: #cccccc;
-    margin-bottom: 1rem;
-    line-height: 1.6;
-    letter-spacing: 0.5px;
-}
-
-.blog-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.875rem;
-}
-
-.blog-date {
-    color: #999999;
-    font-family: 'JetBrains Mono', monospace;
-}
-
-.blog-category {
-    background: rgba(0, 191, 255, 0.2);
-    color: #00bfff;
-    padding: 0.25rem 0.75rem;
-    border-radius: 0;
-    font-weight: 500;
-    border: 1px solid rgba(0, 191, 255, 0.3);
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.5px;
-}
-
-/* Social Section */
-.social-links {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-}
-
-.social-link {
-    background: rgba(0, 0, 0, 0.8);
-    padding: 2rem;
-    border-radius: 0;
-    text-align: center;
-    text-decoration: none;
-    color: #ffffff;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(0, 191, 255, 0.2);
-    backdrop-filter: blur(10px);
-}
-
-.social-link:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 191, 255, 0.1);
-    border-color: rgba(0, 191, 255, 0.5);
-}
-
-.social-link i {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    display: block;
-    color: #00bfff;
-}
-
-.social-link span {
-    display: block;
-    font-weight: 600;
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 1px;
-}
-
-.social-link p {
-    color: #cccccc;
-    font-size: 0.9rem;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.5px;
-}
-
-.social-link.instagram:hover {
-    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-    color: white;
-}
-
-.social-link.snapchat:hover {
-    background: #fffc00;
-    color: #000000;
-}
-
-.social-link.youtube:hover {
-    background: #ff0000;
-    color: white;
-}
-
-.social-link.tiktok:hover {
-    background: #000000;
-    color: white;
-}
-
-/* Footer */
-.footer {
-    background: rgba(0, 0, 0, 0.9);
-    color: white;
-    padding: 2rem 0;
-    border-top: 1px solid rgba(0, 191, 255, 0.2);
-}
-
-.footer-content {
-    display: flex;
+    </style>
+    </head>
+    <body>
+        <!-- Halftone Background -->
+        <canvas class="halftone-bg" id="halftone"></canvas>
+    
+        <div class="container">
+            <header>
+                <div class="logo">kp.archive.blog</div>
+            </header>
+    
+            <main>
+                <div id="main-content">
+                    <!-- Welcome Video -->
+                    <div class="welcome-video">
+                        <p>Welcome Video Placeholder</p>
+                        <!-- Replace with: <video src="your-video.mp4" controls></video> -->
+                    </div>
+    
+                    <section class="intro">
+                        <h1>
+                            KRISH PATEL<br>
+                            DIGITAL ARCHIVIST<br>
+                            CREATOR
+                        </h1>
+    
+                        <div class="experience-list">
+                            <p>Description</p>
+                        </div>
+                    </section>
+    
+                    <section class="hobby-windows">
+                        <div class="hobby-window" data-hobby="music">
+                            <h3>Music & Guitar</h3>
+                            <p>Acoustic and electric guitar. Composition and improvisation.</p>
+                        </div>
+                        <div class="hobby-window" data-hobby="exploration">
+                            <h3>Exploration</h3>
+                            <p>Outdoor expeditions and discovering new environments. Pushing boundaries.</p>
+                        </div>
+                        <div class="hobby-window" data-hobby="hiking">
+                            <h3>Hiking</h3>
+                            <p>Trail exploration and summits. Connecting with nature.</p>
+                        </div>
+                        <div class="hobby-window" data-hobby="travel">
+                            <h3>Travel</h3>
+                            <p>Exploring new destinations and cultures. Documenting journeys worldwide.</p>
+                        </div>
+                        <div class="hobby-window" data-hobby="fitness">
+                            <h3>Fitness</h3>
+                            <p>Strength training and cardio. Maintaining physical wellness.</p>
+                        </div>
+                        <div class="hobby-window" data-hobby="skateboarding">
+                            <h3>Skateboarding</h3>
+                            <p>Street skating and freestyle. Pushing limits on four wheels.</p>
+                        </div>
+                        <div class="hobby-window" data-hobby="photography">
+                            <h3>Photography</h3>
+                            <p>Capturing moments through the lens. Street, landscape, and portrait work.</p>
+                        </div>
+                        <div class="hobby-window" data-hobby="videography">
+                            <h3>Videography</h3>
+                            <p>Visual storytelling and cinematography. Creating compelling narratives.</p>
+                        </div>
+                    </section>
+    
+                    <!-- Photo Gallery -->
+                    <section class="photo-gallery">
+                        <h3 class="gallery-title">Recent Photos</h3>
+                        <div class="gallery-grid">
+                            <div class="gallery-item">Photo 1</div>
+                            <div class="gallery-item">Photo 2</div>
+                            <div class="gallery-item">Photo 3</div>
+                            <div class="gallery-item">Photo 4</div>
+                            <div class="gallery-item">Photo 5</div>
+                            <div class="gallery-item">Photo 6</div>
+                            <div class="gallery-item">Photo 7</div>
+                            <div class="gallery-item">Photo 8</div>
+                        </div>
+                    </section>
+                </div>
+    
+                <!-- Blog Sections (Hidden by default) -->
+                <div class="blog-section" id="blog-photography">
+                    <div class="blog-header">
+                        <h2>Photography</h2>
+                        <div class="blog-meta">Updated regularly</div>
+                    </div>
+                    <div class="blog-content">
+                        <p>Photography has been my creative outlet for over 8 years. What started as casual snapshots evolved into a serious passion for composition, light, and storytelling.</p>
+                        <p>I focus primarily on street photography, capturing candid moments and urban landscapes. There's something magical about finding beauty in everyday scenes that most people walk past without noticing.</p>
+                        
+                        <div class="blog-images">
+                            <h3>Recent Photography</h3>
+                            <div class="blog-image-grid" data-hobby="photography">
+                                <div class="blog-image-item">Photo 1</div>
+                                <div class="blog-image-item">Photo 2</div>
+                                <div class="blog-image-item">Photo 3</div>
+                                <div class="blog-image-item">Photo 4</div>
+                            </div>
+                        </div>
+                        
+                        <p>My gear includes a mix of digital and film cameras. While I appreciate the convenience of digital, there's an intentionality to shooting film that forces you to slow down and really think about each frame.</p>
+                        <p>Recent projects have explored long-exposure cityscapes and portrait work with natural lighting. Each shoot teaches me something new about perspective and patience.</p>
+                    </div>
+                    <button class="back-btn" onclick="showMain()">← Back</button>
+                </div>
+    
+                <div class="blog-section" id="blog-videography">
+                    <div class="blog-header">
+                        <h2>Videography</h2>
+                        <div class="blog-meta">Updated regularly</div>
+                    </div>
+                    <div class="blog-content">
+                        <p>Video work adds motion and sound to the visual stories I want to tell. It's a different beast from photography—requiring planning, editing skills, and an understanding of pacing.</p>
+                        
+                        <div class="blog-images">
+                            <h3>Recent Videos</h3>
+                            <div class="blog-image-grid" data-hobby="videography">
+                                <div class="blog-image-item">Video 1</div>
+                                <div class="blog-image-item">Video 2</div>
+                                <div class="blog-image-item">Video 3</div>
+                                <div class="blog-image-item">Video 4</div>
+                            </div>
+                        </div>
+                        
+                        <p>I've worked on short films, travel videos, and documentary-style projects. The editing process is where the magic happens, finding the rhythm and flow that makes a sequence compelling.</p>
+                        <p>Currently experimenting with color grading and sound design to create more immersive experiences. Every project is a learning opportunity.</p>
+                    </div>
+                    <button class="back-btn" onclick="showMain()">← Back</button>
+                </div>
+    
+                <div class="blog-section" id="blog-music">
+                    <div class="blog-header">
+                        <h2>Music & Guitar</h2>
+                        <div class="blog-meta">Updated regularly</div>
+                    </div>
+                    <div class="blog-content">
+                        <p>Guitar has been my constant companion for the past 5+ years. Started with basic chords and campfire songs, but gradually developed a deeper appreciation for music theory and technique.</p>
+                        <p>I play both acoustic and electric, though I lean towards acoustic for its portability and warmth. Fingerpicking patterns and percussive techniques have become recent obsessions.</p>
+                        <p>Music is meditative for me—a way to disconnect from screens and engage with something purely tactile and auditory. There's always another song to learn, another technique to master.</p>
+                        
+                        <div class="blog-images">
+                            <h3>Guitar & Music</h3>
+                            <div class="blog-image-grid" data-hobby="music">
+                                <div class="blog-image-item">Music 1</div>
+                                <div class="blog-image-item">Music 2</div>
+                                <div class="blog-image-item">Music 3</div>
+                                <div class="blog-image-item">Music 4</div>
+                                <div class="blog-image-item">Music 5</div>
+                                <div class="blog-image-item">Music 6</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="back-btn" onclick="showMain()">← Back</button>
+                </div>
+    
+                <div class="blog-section" id="blog-skateboarding">
+                    <div class="blog-header">
+                        <h2>Skateboarding</h2>
+                        <div class="blog-meta">Updated regularly</div>
+                    </div>
+                    <div class="blog-content">
+                        <p>Skateboarding combines athleticism, creativity, and a unique culture. It's about progression—landing tricks that seemed impossible just weeks ago.</p>
+                        <p>Street skating is my preference. Finding spots, learning lines, and the community aspect make it more than just a sport. It's a lifestyle and a mindset.</p>
+                        <p>The falls teach you resilience. The landings teach you patience. Skateboarding has shaped how I approach challenges in other areas of life.</p>
+                    </div>
+                    <button class="back-btn" onclick="showMain()">← Back</button>
+                </div>
+    
+                <div class="blog-section" id="blog-fitness">
+                    <div class="blog-header">
+                        <h2>Fitness & Working Out</h2>
+                        <div class="blog-meta">Updated regularly</div>
+                    </div>
+                    <div class="blog-content">
+                        <p>Physical fitness is foundational to everything else I do. A consistent workout routine keeps me energized and mentally sharp.</p>
+                        <p>My approach balances strength training with cardio and flexibility work. No extreme diets or unsustainable routines—just steady, progressive training that fits my lifestyle.</p>
+                        <p>The gym is where I set goals, track progress, and push my limits safely. It's as much about mental discipline as physical gains.</p>
+                    </div>
+                    <button class="back-btn" onclick="showMain()">← Back</button>
+                </div>
+    
+                <div class="blog-section" id="blog-hiking">
+                    <div class="blog-header">
+                        <h2>Hiking</h2>
+                        <div class="blog-meta">Updated regularly</div>
+                    </div>
+                    <div class="blog-content">
+                        <p>Hiking connects me with nature and provides perspective that's impossible to find in the city. Whether it's day hikes or multi-day backpacking trips, time on the trail is restorative.</p>
+                        <p>I've explored over 50 trails across different terrains and climates. Each summit earned, each vista discovered adds to a growing catalog of memories.</p>
+                        <p>The physical challenge, the solitude, the views—hiking combines so many elements that make me feel alive and present. It's where I do my best thinking.</p>
+                    </div>
+                    <button class="back-btn" onclick="showMain()">← Back</button>
+                </div>
+    
+                <div class="blog-section" id="blog-travel">
+                    <div class="blog-header">
+                        <h2>Travel</h2>
+                        <div class="blog-meta">Updated regularly</div>
+                    </div>
+                    <div class="blog-content">
+                        <p>Travel has shaped my worldview more than any other pursuit. Each destination offers new perspectives, cultures, and ways of understanding the world.</p>
+                        <p>From bustling cities to remote villages, I've documented journeys across 15+ countries. The goal isn't just tourism—it's immersion, understanding, and connection with places and people.</p>
+                        <p>Through travel photography and videography, I capture these experiences not just for memories, but to share stories that bridge cultural divides and inspire curiosity about our diverse world.</p>
+                        <p>Every trip teaches lessons about adaptability, empathy, and the universal human experiences that connect us all despite our differences.</p>
+                    </div>
+                    <button class="back-btn" onclick="showMain()">← Back</button>
+                </div>
+    
+                <div class="blog-section" id="blog-exploration">
+                    <div class="blog-header">
+                        <h2>Exploration</h2>
+                        <div class="blog-meta">Updated regularly</div>
+                    </div>
+                    <div class="blog-content">
+                        <p>Exploration means pushing beyond comfort zones and discovering what lies beyond the familiar. It's about challenging myself physically and mentally in new environments.</p>
+                        <p>This encompasses everything from backcountry expeditions to urban exploration—anywhere that demands resourcefulness, preparation, and respect for the environment.</p>
+                        <p>The thrill isn't just in reaching destinations, but in the problem-solving, navigation, and self-reliance required along the way. Each expedition builds confidence and competence.</p>
+                        <p>Whether it's finding hidden trails, exploring abandoned structures, or venturing into wilderness areas, exploration satisfies a fundamental human drive to discover and understand our surroundings.</p>
+                    </div>
+                    <button class="back-btn" onclick="showMain()">← Back</button>
+                </div>
+            </main>
+    
+            <footer>
+                <div class="footer-content">
+                    <div class="email">
+                        <a href="mailto:thegamerk07@outlook.com">thegamerk07@outlook.com</a>
+                    </div>
+                    <div class="links">
+                        <span style="opacity: 0.6;">Socials</span>
+                        <a href="https://www.instagram.com/anythingforausername/" target="_blank">Instagram</a>
+                        <a href="https://www.snapchat.com/@anytngforausrnm" target="_blank">Snapchat</a>
+                        <a href="https://www.youtube.com/@anything_for_a_username" target="_blank">YouTube</a>
+                        <a href="https://www.tiktok.com/@anythingforausern" target="_blank">TikTok</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    
+        <!-- Photo Modal -->
+        <div class="photo-modal" id="photoModal">
+            <button class="modal-close" onclick="closePhotoModal()">×</button>
+            <div class="modal-content">
+                <img class="modal-image" id="modalImage" src="" alt="">
+                <div class="modal-description">
+                    <h3 id="modalTitle">Photo Title</h3>
+                    <p id="modalDesc">Photo description goes here...</p>
+                </div>
+            </div>
+        </div>
+    
+        <script>
+            // Halftone canvas animation
+            const canvas = document.getElementById('halftone');
+            const ctx = canvas.getContext('2d');
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth * 0.6;
+                canvas.height = window.innerHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            function drawHalftone() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                const dotSize = 3;
+                const spacing = 6;
+                const time = Date.now() * 0.0005;
+                
+                for (let x = 0; x < canvas.width; x += spacing) {
+                    for (let y = 0; y < canvas.height; y += spacing) {
+                        // Create horizontal ocean wave pattern
+                        const wave1 = Math.sin(y * 0.015 + time * 2);
+                        const wave2 = Math.sin(y * 0.025 + x * 0.008 + time * 1.5);
+                        const wave3 = Math.cos(y * 0.01 + time);
+                        
+                        const combinedWave = (wave1 + wave2 * 0.5 + wave3 * 0.3) / 1.8;
+                        const waveIntensity = (combinedWave + 1) / 2;
+                        
+                        // Vary dot size and opacity based on wave
+                        const size = dotSize * (0.3 + waveIntensity * 0.9);
+                        const alpha = 0.2 + waveIntensity * 0.5;
+                        
+                        // Blue gradient from light to dark
+                        const r = 0;
+                        const g = Math.floor(100 + waveIntensity * 150);
+                        const b = 255;
+                        
+                        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+                        ctx.beginPath();
+                        ctx.arc(x, y, size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+                
+                requestAnimationFrame(drawHalftone);
+            }
+            
+            drawHalftone();
+            
+            // Hobby window click handlers
+            const hobbyWindows = document.querySelectorAll('.hobby-window');
+            const mainContent = document.getElementById('main-content');
+            const blogSections = document.querySelectorAll('.blog-section');
+            
+            hobbyWindows.forEach(window => {
+                window.addEventListener('click', function() {
+                    const hobby = this.getAttribute('data-hobby');
+                    showBlog(hobby);
+                });
+            });
+            
+            function showBlog(hobby) {
+                mainContent.style.display = 'none';
+                blogSections.forEach(section => section.classList.remove('active'));
+                document.getElementById(`blog-${hobby}`).classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            function showMain() {
+                blogSections.forEach(section => section.classList.remove('active'));
+                mainContent.style.display = 'block';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            // Update Recent Photos gallery with most recent images from all hobbies
+            function updateRecentPhotos() {
+                const recentGallery = document.querySelector('.gallery-grid');
+                const allBlogImages = document.querySAll('.blog-image-item img');
+                
+                // Clear current gallery
+                recentGallery.innerHTML = '';
+                
+                // Collect all images from hobby blogs
+                const allImages = [];
+                document.querySelectorAll('.blog-image-grid').forEach(grid => {
+                    const hobby = grid.getAttribute('data-hobby');
+                    const images = grid.querySelectorAll('.blog-image-item');
+                    images.forEach((img, index) => {
+                        if (img.querySelector('img')) {
+                            allImages.push({
+                                element: img.cloneNode(true),
+                                hobby: hobby,
+                                index: index
+                            });
+                        }
+                    });
+                });
+                
+                // Get the 8 most recent images (or however many exist)
+                const recentImages = allImages.slice(-8).reverse();
+                
+                // Populate recent photos gallery
+                if (recentImages.length > 0) {
+                    recentImages.forEach(imgData => {
+                        recentGallery.appendChild(imgData.element);
+                    });
+                } else {
+                    // Show placeholders if no images exist
+                    for (let i = 1; i <= 8; i++) {
+                        const placeholder = document.createElement('div');
+                        placeholder.className = 'gallery-item';
+                        placeholder.textContent = `Photo ${i}`;
+                        recentGallery.appendChild(placeholder);
+                    }
+                }
+            }
+            
+            // Call on page load
+            window.addEventListener('load', updateRecentPhotos);
+            
+            // Photo Modal Functions
+            function openPhotoModal(imageSrc, title, description) {
+                const modal = document.getElementById('photoModal');
+                const modalImage = document.getElementById('modalImage');
+                const modalTitle = document.getElementById('modalTitle');
+                const modalDesc = document.getElementById('modalDesc');
+                
+                modalImage.src = imageSrc;
+                modalTitle.textContent = title;
+                modalDesc.textContent = description;
+                
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            
+            function closePhotoModal() {
+                const modal = document.getElementById('photoModal');
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+            
+            // Close modal on background click
+            document.getElementById('photoModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closePhotoModal();
+                }
+            });
+            
+            // Close modal on ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closePhotoModal();
+                }
+            });
+            
+            // Add click handlers to all blog images
+            function initializePhotoClicks() {
+                document.querySelectorAll('.blog-image-item, .gallery-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        const img = this.querySelector('img');
+                        if (img) {
+                            const title = this.getAttribute('data-title') || 'Untitled Photo';
+                            const description = this.getAttribute('data-description') || 'No description available.';
+                            openPhotoModal(img.src, title, description);
+                        }
+                    });
+                });
+            }
+            
+            // Initialize on load and after blog navigation
+            window.addEventListener('load', initializePhotoClicks);
+            
+            console.log('Digital Archive website loaded successfully! 🚀');
