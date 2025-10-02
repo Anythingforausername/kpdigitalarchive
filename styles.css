@@ -85,7 +85,8 @@ body::after {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    max-width: 280px;
+    max-width: 450px;
+    padding: 0 20px;
 }
 
 /* Halftone canvas animation */
