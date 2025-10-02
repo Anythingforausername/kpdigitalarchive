@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>kp.archive.blog</title>
+    <title>kp.archive</title>
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"> <!-- Linked CSS file -->
 </head>
 <body>
     <!-- Halftone Background -->
@@ -14,6 +14,8 @@
     <div class="container">
         <header>
             <div class="logo">kp.archive.blog</div>
+            <!-- If you want a theme toggle, you'd add it here and implement its JS in script.js -->
+            <!-- <button class="theme-toggle">☀️</button> -->
         </header>
 
         <main>
@@ -21,6 +23,8 @@
                 <!-- Welcome Video -->
                 <div class="welcome-video">
                     <p>Welcome Video Placeholder</p>
+                    <!-- To use a video, uncomment and replace 'your-video.mp4' -->
+                    <!-- <video src="your-video.mp4" controls muted loop playsinline></video> -->
                 </div>
 
                 <section class="intro">
@@ -31,11 +35,10 @@
                     </h1>
 
                     <div class="experience-list">
-                        <p>Description</p>
+                        <p>Description: I'm a passionate digital archivist and content creator, documenting my journey through various creative and adventurous pursuits.</p>
                     </div>
                 </section>
 
-                <!-- Hobby Windows -->
                 <section class="hobby-windows">
                     <div class="hobby-window" data-hobby="music">
                         <h3>Music & Guitar</h3>
@@ -71,10 +74,15 @@
                     </div>
                 </section>
 
-                <!-- Recent Photos -->
+                <!-- Photo Gallery -->
                 <section class="photo-gallery">
                     <h3 class="gallery-title">Recent Photos</h3>
                     <div class="gallery-grid">
+                        <!-- Photos from blog sections will be dynamically inserted here by JavaScript -->
+                        <!-- Example of an actual image item: -->
+                        <!-- <div class="gallery-item" data-title="City Lights" data-description="A vibrant shot of the city at dusk.">
+                            <img src="images/photo1.jpg" alt="City Lights">
+                        </div> -->
                         <div class="gallery-item">Photo 1</div>
                         <div class="gallery-item">Photo 2</div>
                         <div class="gallery-item">Photo 3</div>
@@ -87,80 +95,34 @@
                 </section>
             </div>
 
-            <!-- Blog Sections -->
-            <div class="blog-section" id="blog-music">
-                <div class="blog-header">
-                    <h2>Music & Guitar</h2>
-                    <div class="blog-meta">Updated regularly</div>
-                </div>
-                <div class="blog-content">
-                    <p>Guitar has been my constant companion for the past 5+ years...</p>
-                </div>
-                <button class="back-btn" onclick="showMain()">← Back</button>
-            </div>
-
-            <div class="blog-section" id="blog-exploration">
-                <div class="blog-header">
-                    <h2>Exploration</h2>
-                    <div class="blog-meta">Updated regularly</div>
-                </div>
-                <div class="blog-content">
-                    <p>Exploration means pushing beyond comfort zones and discovering what lies beyond...</p>
-                </div>
-                <button class="back-btn" onclick="showMain()">← Back</button>
-            </div>
-
-            <div class="blog-section" id="blog-hiking">
-                <div class="blog-header">
-                    <h2>Hiking</h2>
-                    <div class="blog-meta">Updated regularly</div>
-                </div>
-                <div class="blog-content">
-                    <p>Hiking connects me with nature and provides perspective...</p>
-                </div>
-                <button class="back-btn" onclick="showMain()">← Back</button>
-            </div>
-
-            <div class="blog-section" id="blog-travel">
-                <div class="blog-header">
-                    <h2>Travel</h2>
-                    <div class="blog-meta">Updated regularly</div>
-                </div>
-                <div class="blog-content">
-                    <p>Travel has shaped my worldview more than any other pursuit...</p>
-                </div>
-                <button class="back-btn" onclick="showMain()">← Back</button>
-            </div>
-
-            <div class="blog-section" id="blog-fitness">
-                <div class="blog-header">
-                    <h2>Fitness</h2>
-                    <div class="blog-meta">Updated regularly</div>
-                </div>
-                <div class="blog-content">
-                    <p>Physical fitness is foundational to everything else I do...</p>
-                </div>
-                <button class="back-btn" onclick="showMain()">← Back</button>
-            </div>
-
-            <div class="blog-section" id="blog-skateboarding">
-                <div class="blog-header">
-                    <h2>Skateboarding</h2>
-                    <div class="blog-meta">Updated regularly</div>
-                </div>
-                <div class="blog-content">
-                    <p>Skateboarding combines athleticism, creativity, and a unique culture...</p>
-                </div>
-                <button class="back-btn" onclick="showMain()">← Back</button>
-            </div>
-
+            <!-- Blog Sections (Hidden by default) -->
             <div class="blog-section" id="blog-photography">
                 <div class="blog-header">
                     <h2>Photography</h2>
                     <div class="blog-meta">Updated regularly</div>
                 </div>
                 <div class="blog-content">
-                    <p>Photography has been my creative outlet for over 8 years...</p>
+                    <p>Photography has been my creative outlet for over 8 years. What started as casual snapshots evolved into a serious passion for composition, light, and storytelling.</p>
+                    <p>I focus primarily on street photography, capturing candid moments and urban landscapes. There's something magical about finding beauty in everyday scenes that most people walk past without noticing.</p>
+                    
+                    <div class="blog-images">
+                        <h3>Recent Photography</h3>
+                        <div class="blog-image-grid" data-hobby="photography">
+                            <!-- Replace placeholders with actual images -->
+                            <!-- Example: -->
+                            <div class="blog-image-item" data-title="Golden Hour City" data-description="Capturing the city bathed in warm light.">
+                                <img src="images/photography/photo1.jpg" alt="Golden Hour City">
+                            </div>
+                            <div class="blog-image-item" data-title="Old Town Alley" data-description="Exploring the charming narrow streets.">
+                                <img src="images/photography/photo2.jpg" alt="Old Town Alley">
+                            </div>
+                            <div class="blog-image-item">Photo 3</div>
+                            <div class="blog-image-item">Photo 4</div>
+                        </div>
+                    </div>
+                    
+                    <p>My gear includes a mix of digital and film cameras. While I appreciate the convenience of digital, there's an intentionality to shooting film that forces you to slow down and really think about each frame.</p>
+                    <p>Recent projects have explored long-exposure cityscapes and portrait work with natural lighting. Each shoot teaches me something new about perspective and patience.</p>
                 </div>
                 <button class="back-btn" onclick="showMain()">← Back</button>
             </div>
@@ -171,7 +133,114 @@
                     <div class="blog-meta">Updated regularly</div>
                 </div>
                 <div class="blog-content">
-                    <p>Video work adds motion and sound to the visual stories I want to tell...</p>
+                    <p>Video work adds motion and sound to the visual stories I want to tell. It's a different beast from photography—requiring planning, editing skills, and an understanding of pacing.</p>
+                    
+                    <div class="blog-images">
+                        <h3>Recent Videos</h3>
+                        <div class="blog-image-grid" data-hobby="videography">
+                            <!-- Replace placeholders with actual video thumbnails or images -->
+                            <div class="blog-image-item">Video 1</div>
+                            <div class="blog-image-item">Video 2</div>
+                            <div class="blog-image-item">Video 3</div>
+                            <div class="blog-image-item">Video 4</div>
+                        </div>
+                    </div>
+                    
+                    <p>I've worked on short films, travel videos, and documentary-style projects. The editing process is where the magic happens, finding the rhythm and flow that makes a sequence compelling.</p>
+                    <p>Currently experimenting with color grading and sound design to create more immersive experiences. Every project is a learning opportunity.</p>
+                </div>
+                <button class="back-btn" onclick="showMain()">← Back</button>
+            </div>
+
+            <div class="blog-section" id="blog-music">
+                <div class="blog-header">
+                    <h2>Music & Guitar</h2>
+                    <div class="blog-meta">Updated regularly</div>
+                </div>
+                <div class="blog-content">
+                    <p>Guitar has been my constant companion for the past 5+ years. Started with basic chords and campfire songs, but gradually developed a deeper appreciation for music theory and technique.</p>
+                    <p>I play both acoustic and electric, though I lean towards acoustic for its portability and warmth. Fingerpicking patterns and percussive techniques have become recent obsessions.</p>
+                    <p>Music is meditative for me—a way to disconnect from screens and engage with something purely tactile and auditory. There's always another song to learn, another technique to master.</p>
+                    
+                    <div class="blog-images">
+                        <h3>Guitar & Music</h3>
+                        <div class="blog-image-grid" data-hobby="music">
+                            <!-- Replace placeholders with actual images -->
+                            <div class="blog-image-item">Music 1</div>
+                            <div class="blog-image-item">Music 2</div>
+                            <div class="blog-image-item">Music 3</div>
+                            <div class="blog-image-item">Music 4</div>
+                            <div class="blog-image-item">Music 5</div>
+                            <div class="blog-image-item">Music 6</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="back-btn" onclick="showMain()">← Back</button>
+            </div>
+
+            <div class="blog-section" id="blog-skateboarding">
+                <div class="blog-header">
+                    <h2>Skateboarding</h2>
+                    <div class="blog-meta">Updated regularly</div>
+                </div>
+                <div class="blog-content">
+                    <p>Skateboarding combines athleticism, creativity, and a unique culture. It's about progression—landing tricks that seemed impossible just weeks ago.</p>
+                    <p>Street skating is my preference. Finding spots, learning lines, and the community aspect make it more than just a sport. It's a lifestyle and a mindset.</p>
+                    <p>The falls teach you resilience. The landings teach you patience. Skateboarding has shaped how I approach challenges in other areas of life.</p>
+                </div>
+                <button class="back-btn" onclick="showMain()">← Back</button>
+            </div>
+
+            <div class="blog-section" id="blog-fitness">
+                <div class="blog-header">
+                    <h2>Fitness & Working Out</h2>
+                    <div class="blog-meta">Updated regularly</div>
+                </div>
+                <div class="blog-content">
+                    <p>Physical fitness is foundational to everything else I do. A consistent workout routine keeps me energized and mentally sharp.</p>
+                    <p>My approach balances strength training with cardio and flexibility work. No extreme diets or unsustainable routines—just steady, progressive training that fits my lifestyle.</p>
+                    <p>The gym is where I set goals, track progress, and push my limits safely. It's as much about mental discipline as physical gains.</p>
+                </div>
+                <button class="back-btn" onclick="showMain()">← Back</button>
+            </div>
+
+            <div class="blog-section" id="blog-hiking">
+                <div class="blog-header">
+                    <h2>Hiking</h2>
+                    <div class="blog-meta">Updated regularly</div>
+                </div>
+                <div class="blog-content">
+                    <p>Hiking connects me with nature and provides perspective that's impossible to find in the city. Whether it's day hikes or multi-day backpacking trips, time on the trail is restorative.</p>
+                    <p>I've explored over 50 trails across different terrains and climates. Each summit earned, each vista discovered adds to a growing catalog of memories.</p>
+                    <p>The physical challenge, the solitude, the views—hiking combines so many elements that make me feel alive and present. It's where I do my best thinking.</p>
+                </div>
+                <button class="back-btn" onclick="showMain()">← Back</button>
+            </div>
+
+            <div class="blog-section" id="blog-travel">
+                <div class="blog-header">
+                    <h2>Travel</h2>
+                    <div class="blog-meta">Updated regularly</div>
+                </div>
+                <div class="blog-content">
+                    <p>Travel has shaped my worldview more than any other pursuit. Each destination offers new perspectives, cultures, and ways of understanding the world.</p>
+                    <p>From bustling cities to remote villages, I've documented journeys across 15+ countries. The goal isn't just tourism—it's immersion, understanding, and connection with places and people.</p>
+                    <p>Through travel photography and videography, I capture these experiences not just for memories, but to share stories that bridge cultural divides and inspire curiosity about our diverse world.</p>
+                    <p>Every trip teaches lessons about adaptability, empathy, and the universal human experiences that connect us all despite our differences.</p>
+                </div>
+                <button class="back-btn" onclick="showMain()">← Back</button>
+            </div>
+
+            <div class="blog-section" id="blog-exploration">
+                <div class="blog-header">
+                    <h2>Exploration</h2>
+                    <div class="blog-meta">Updated regularly</div>
+                </div>
+                <div class="blog-content">
+                    <p>Exploration means pushing beyond comfort zones and discovering what lies beyond the familiar. It's about challenging myself physically and mentally in new environments.</p>
+                    <p>This encompasses everything from backcountry expeditions to urban exploration—anywhere that demands resourcefulness, preparation, and respect for the environment.</p>
+                    <p>The thrill isn't just in reaching destinations, but in the problem-solving, navigation, and self-reliance required along the way. Each expedition builds confidence and competence.</p>
+                    <p>Whether it's finding hidden trails, exploring abandoned structures, or venturing into wilderness areas, exploration satisfies a fundamental human drive to discover and understand our surroundings.</p>
                 </div>
                 <button class="back-btn" onclick="showMain()">← Back</button>
             </div>
@@ -197,7 +266,7 @@
     <div class="photo-modal" id="photoModal">
         <button class="modal-close" onclick="closePhotoModal()">×</button>
         <div class="modal-content">
-            <img class="modal-image" id="modalImage" src="" alt="">
+            <img class="modal-image" id="modalImage" src="" alt="Modal Image">
             <div class="modal-description">
                 <h3 id="modalTitle">Photo Title</h3>
                 <p id="modalDesc">Photo description goes here...</p>
@@ -205,6 +274,6 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js"></script> <!-- Linked JavaScript file -->
 </body>
 </html>
