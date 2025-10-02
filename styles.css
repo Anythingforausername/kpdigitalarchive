@@ -1,14 +1,14 @@
-/* General Styles */
+/* General Layout */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: #fafafa;
+  background: #fdfdfd;
   color: #333;
 }
 
 header {
-  background: #444;
+  background: #333;
   color: white;
   padding: 1em;
   text-align: center;
