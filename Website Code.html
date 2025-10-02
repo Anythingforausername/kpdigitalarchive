@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kp.archive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier Prime', 'Courier New', monospace;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Halftone dot background */
+        .halftone-bg {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            padding: 40px 40px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid #fff;
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        /* Main content */
+        main {
+            padding: 60px 40px;
+            flex: 1;
+        }
+
+        .intro {
+            max-width: 500px;
+            margin-bottom: 80px;
+        }
+
+        .intro h1 {
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            letter-spacing: 0.3px;
+        }
+
+        .experience-list {
+            font-size: 16px;
+            line-height: 2;
+        }
+
+        .experience-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 4px;
+        }
+
+        .exp-company {
+            min-width: 100px;
+        }
+
+        .exp-role {
+            min-width: 80px;
+        }
+
+        /* Hobby Windows */
+        .hobby-windows {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .hobby-window {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hobby-window::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #0066cc, #00bfff, #00e5ff);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .hobby-window:hover::before {
+            transform: scaleX(1);
+        }
+
+        .hobby-window:hover {
+            background: rgba(0, 191, 255, 0.1);
+            border-color: rgba(0, 191, 255, 0.5);
+        }
+
+        .hobby-window:hover::before {
+            transform: scaleX(1);
+        }
+
+        .hobby-window h3 {
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .hobby-window p {
+            font-size: 14px;
+            opacity: 0.7;
+            line-height: 1.6;
+        }
+
+        /* Blog Section (hidden by default) */
+        .blog-section {
+            display: none;
+            max-width: 700px;
+            margin: 40px 0;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .blog-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .blog-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .blog-header h2 {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 10px;
+            color: #00bfff;
+        }
+
+        .blog-meta {
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        .blog-content {
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .blog-content p {
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: none;
+            color: #fff;
+            cursor: pointer;
+            font-family: 'Courier Prime', monospace;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #00bfff;
+        }
+
+        /* Footer / Links */
+        footer {
+            padding: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Welcome Video Section */
+        .welcome-video {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 60px;
+            aspect-ratio: 16/9;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        .welcome-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Photo Gallery Section */
+        .photo-gallery {
+            width: 100%;
+            max-width: 900px;
+            margin: 60px auto 0;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gallery-title {
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            opacity: 0.6;
+        }
+
+        .gallery-item:hover {
+            border-color: rgba(0, 191, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Blog Images Section */
+        .blog-images {
+            margin: 30px 0 0 0;
+            padding: 20px 0 0 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .blog-images h3 {
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .blog-image-grid {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding-bottom: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: #00bfff #000;
+        }
+
+        .blog-image-grid::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .blog-image-grid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .blog-image-grid::-webkit-scrollbar-thumb {
+            background: #00bfff;
+            border-radius: 0;
+        }
+
+        .blog-image-grid::-webkit-scrollbar-thumb:hover {
+            background: #0099cc;
+        }
+
+        .blog-image-item {
+            min-width: 150px;
+            width: 150px;
+            height: 150px;
+            flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .blog-image-item:hover {
+            border-color: rgba(0, 191, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        .blog-image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Photo Modal/Lightbox */
+        .photo-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .photo-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .modal-image {
+            width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-description {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #cccccc;
+        }
+
+        .modal-description h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #00bfff;
+            font-weight: 400;
+        }
+
+        .modal-close {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(0, 191, 255, 0.2);
+            border-color: #00bfff;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .email {
+            text-align: center;
+            font-size: 16px;
+            color: #fff;
+            opacity: 0.8;
+        }
+
+        .email a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .email a:hover {
+            color: #00bfff;
+        }
+
+        .links {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            font-size: 16px;
+            justify-content: center;
+        }
+
+        .links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .links a:hover {
+            opacity: 0.8;
+        }
+
+        .links a[href*="instagram"]:hover {
+            color: #E4405F;
+        }
+
+        .links a[href*="snapchat"]:hover {
+            color: #FFFC00;
+        }
+
+        .links a[href*="youtube"]:hover {
+            color: #FF0000;
+        }
+
+        .links a[href*="tiktok"]:hover {
+            color: #FF6B9D;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header, main, footer {
+                padding: 30px 20px;
+            }
+
+            .intro {
+                margin-bottom: 50px;
+            }
+
+            .experience-item {
+                flex-direction: column;
+                gap: 5px;
+                margin-bottom: 15px;
+            }
+
+            .hobby-windows {
+                grid-template-columns: 1fr;
+            }
+
+            .halftone-bg {
+                width: 100%;
+                opacity: 0.3;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Halftone Background -->
+    <canvas class="halftone-bg" id="halftone"></canvas>
+
+    <div class="container">
+        <header>
+            <div class="logo">kp.archive.blog</div>
+        </header>
+
+        <main>
+            <div id="main-content">
+                <!-- Welcome Video -->
+                <div class="welcome-video">
+                    <p>Welcome Video Placeholder</p>
+                    <!-- Replace with: <video src="your-video.mp4" controls></video> -->
+                </div>
+
+                <section class="intro">
+                    <h1>
+                        KRISH PATEL<br>
+                        DIGITAL ARCHIVIST<br>
+                        CREATOR
+                    </h1>
+
+                    <div class="experience-list">
+                        <p>Description</p>
+                    </div>
+                </section>
+
+                <section class="hobby-windows">
+                    <div class="hobby-window" data-hobby="music">
+                        <h3>Music & Guitar</h3>
+                        <p>Acoustic and electric guitar. Composition and improvisation.</p>
+                    </div>
+                    <div class="hobby-window" data-hobby="exploration">
+                        <h3>Exploration</h3>
+                        <p>Outdoor expeditions and discovering new environments. Pushing boundaries.</p>
+                    </div>
+                    <div class="hobby-window" data-hobby="hiking">
+                        <h3>Hiking</h3>
+                        <p>Trail exploration and summits. Connecting with nature.</p>
+                    </div>
+                    <div class="hobby-window" data-hobby="travel">
+                        <h3>Travel</h3>
+                        <p>Exploring new destinations and cultures. Documenting journeys worldwide.</p>
+                    </div>
+                    <div class="hobby-window" data-hobby="fitness">
+                        <h3>Fitness</h3>
+                        <p>Strength training and cardio. Maintaining physical wellness.</p>
+                    </div>
+                    <div class="hobby-window" data-hobby="skateboarding">
+                        <h3>Skateboarding</h3>
+                        <p>Street skating and freestyle. Pushing limits on four wheels.</p>
+                    </div>
+                    <div class="hobby-window" data-hobby="photography">
+                        <h3>Photography</h3>
+                        <p>Capturing moments through the lens. Street, landscape, and portrait work.</p>
+                    </div>
+                    <div class="hobby-window" data-hobby="videography">
+                        <h3>Videography</h3>
+                        <p>Visual storytelling and cinematography. Creating compelling narratives.</p>
+                    </div>
+                </section>
+
+                <!-- Photo Gallery -->
+                <section class="photo-gallery">
+                    <h3 class="gallery-title">Recent Photos</h3>
+                    <div class="gallery-grid">
+                        <div class="gallery-item">Photo 1</div>
+                        <div class="gallery-item">Photo 2</div>
+                        <div class="gallery-item">Photo 3</div>
+                        <div class="gallery-item">Photo 4</div>
+                        <div class="gallery-item">Photo 5</div>
+                        <div class="gallery-item">Photo 6</div>
+                        <div class="gallery-item">Photo 7</div>
+                        <div class="gallery-item">Photo 8</div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Blog Sections (Hidden by default) -->
+            <div class="blog-section" id="blog-photography">
+                <div class="blog-header">
+                    <h2>Photography</h2>
+                    <div class="blog-meta">Updated regularly</div>
+                </div>
+                <div class="blog-content">
+                    <p>Photography has been my creative outlet for over 8 years. What started as casual snapshots evolved into a serious passion for composition, light, and storytelling.</p>
+                    <p>I focus primarily on street photography, capturing candid moments and urban landscapes. There's something magical about finding beauty in everyday scenes that most people walk past without noticing.</p>
+                    
+                    <div class="blog-images">
+                        <h3>Recent Photography</h3>
+                        <div class="blog-image-grid" data-hobby="photography">
+                            <div class="blog-image-item">Photo 1</div>
+                            <div class="blog-image-item">Photo 2</div>
+                            <div class="blog-image-item">Photo 3</div>
+                            <div class="blog-image-item">Photo 4</div>
+                        </div>
+                    </div>
+                    
+                    <p>My gear includes a mix of digital and film cameras. While I appreciate the convenience of digital, there's an intentionality to shooting film that forces you to slow down and really think about each frame.</p>
+                    <p>Recent projects have explored long-exposure cityscapes and portrait work with natural lighting. Each shoot teaches me something new about perspective and patience.</p>
+                </div>
+                <button class="back-btn" onclick="showMain()">← Back</button>
+            </div>
+
+            <div class="blog-section" id="blog-videography">
+                <div class="blog-header">
+                    <h2>Videography</h2>
+                    <div class="blog-meta">Updated regularly</div>
+                </div>
+                <div class="blog-content">
+                    <p>Video work adds motion and sound to the visual stories I want to tell. It's a different beast from photography—requiring planning, editing skills, and an understanding of pacing.</p>
+                    
+                    <div class="blog-images">
+                        <h3>Recent Videos</h3>
+                        <div class="blog-image-grid" data-hobby="videography">
+                            <div class="blog-image-item">Video 1</div>
+                            <div class="blog-image-item">Video 2</div>
+                            <div class="blog-image-item">Video 3</div>
+                            <div class="blog-image-item">Video 4</div>
+                        </div>
+                    </div>
+                    
+                    <p>I've worked on short films, travel videos, and documentary-style projects. The editing process is where the magic happens, finding the rhythm and flow that makes a sequence compelling.</p>
+                    <p>Currently experimenting with color grading and sound design to create more immersive experiences. Every project is a learning opportunity.</p>
+                </div>
+                <button class="back-btn" onclick="showMain()">← Back</button>
+            </div>
+
+            <div class="blog-section" id="blog-music">
+                <div class="blog-header">
+                    <h2>Music & Guitar</h2>
+                    <div class="blog-meta">Updated regularly</div>
+                </div>
+                <div class="blog-content">
+                    <p>Guitar has been my constant companion for the past 5+ years. Started with basic chords and campfire songs, but gradually developed a deeper appreciation for music theory and technique.</p>
+                    <p>I play both acoustic and electric, though I lean towards acoustic for its portability and warmth. Fingerpicking patterns and percussive techniques have become recent obsessions.</p>
+                    <p>Music is meditative for me—a way to disconnect from screens and engage with something purely tactile and auditory. There's always another song to learn, another technique to master.</p>
+                    
+                    <div class="blog-images">
+                        <h3>Guitar & Music</h3>
+                        <div class="blog-image-grid" data-hobby="music">
+                            <div class="blog-image-item">Music 1</div>
+                            <div class="blog-image-item">Music 2</div>
+                            <div class="blog-image-item">Music 3</div>
+                            <div class="blog-image-item">Music 4</div>
+                            <div class="blog-image-item">Music 5</div>
+                            <div class="blog-image-item">Music 6</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="back-btn" onclick="showMain()">← Back</button>
+            </div>
+
+            <div class="blog-section" id="blog-skateboarding">
+                <div class="blog-header">
+                    <h2>Skateboarding</h2>
+                    <div class="blog-meta">Updated regularly</div>
+                </div>
+                <div class="blog-content">
+                    <p>Skateboarding combines athleticism, creativity, and a unique culture. It's about progression—landing tricks that seemed impossible just weeks ago.</p>
+                    <p>Street skating is my preference. Finding spots, learning lines, and the community aspect make it more than just a sport. It's a lifestyle and a mindset.</p>
+                    <p>The falls teach you resilience. The landings teach you patience. Skateboarding has shaped how I approach challenges in other areas of life.</p>
+                </div>
+                <button class="back-btn" onclick="showMain()">← Back</button>
+            </div>
+
+            <div class="blog-section" id="blog-fitness">
+                <div class="blog-header">
+                    <h2>Fitness & Working Out</h2>
+                    <div class="blog-meta">Updated regularly</div>
+                </div>
+                <div class="blog-content">
+                    <p>Physical fitness is foundational to everything else I do. A consistent workout routine keeps me energized and mentally sharp.</p>
+                    <p>My approach balances strength training with cardio and flexibility work. No extreme diets or unsustainable routines—just steady, progressive training that fits my lifestyle.</p>
+                    <p>The gym is where I set goals, track progress, and push my limits safely. It's as much about mental discipline as physical gains.</p>
+                </div>
+                <button class="back-btn" onclick="showMain()">← Back</button>
+            </div>
+
+            <div class="blog-section" id="blog-hiking">
+                <div class="blog-header">
+                    <h2>Hiking</h2>
+                    <div class="blog-meta">Updated regularly</div>
+                </div>
+                <div class="blog-content">
+                    <p>Hiking connects me with nature and provides perspective that's impossible to find in the city. Whether it's day hikes or multi-day backpacking trips, time on the trail is restorative.</p>
+                    <p>I've explored over 50 trails across different terrains and climates. Each summit earned, each vista discovered adds to a growing catalog of memories.</p>
+                    <p>The physical challenge, the solitude, the views—hiking combines so many elements that make me feel alive and present. It's where I do my best thinking.</p>
+                </div>
+                <button class="back-btn" onclick="showMain()">← Back</button>
+            </div>
+
+            <div class="blog-section" id="blog-travel">
+                <div class="blog-header">
+                    <h2>Travel</h2>
+                    <div class="blog-meta">Updated regularly</div>
+                </div>
+                <div class="blog-content">
+                    <p>Travel has shaped my worldview more than any other pursuit. Each destination offers new perspectives, cultures, and ways of understanding the world.</p>
+                    <p>From bustling cities to remote villages, I've documented journeys across 15+ countries. The goal isn't just tourism—it's immersion, understanding, and connection with places and people.</p>
+                    <p>Through travel photography and videography, I capture these experiences not just for memories, but to share stories that bridge cultural divides and inspire curiosity about our diverse world.</p>
+                    <p>Every trip teaches lessons about adaptability, empathy, and the universal human experiences that connect us all despite our differences.</p>
+                </div>
+                <button class="back-btn" onclick="showMain()">← Back</button>
+            </div>
+
+            <div class="blog-section" id="blog-exploration">
+                <div class="blog-header">
+                    <h2>Exploration</h2>
+                    <div class="blog-meta">Updated regularly</div>
+                </div>
+                <div class="blog-content">
+                    <p>Exploration means pushing beyond comfort zones and discovering what lies beyond the familiar. It's about challenging myself physically and mentally in new environments.</p>
+                    <p>This encompasses everything from backcountry expeditions to urban exploration—anywhere that demands resourcefulness, preparation, and respect for the environment.</p>
+                    <p>The thrill isn't just in reaching destinations, but in the problem-solving, navigation, and self-reliance required along the way. Each expedition builds confidence and competence.</p>
+                    <p>Whether it's finding hidden trails, exploring abandoned structures, or venturing into wilderness areas, exploration satisfies a fundamental human drive to discover and understand our surroundings.</p>
+                </div>
+                <button class="back-btn" onclick="showMain()">← Back</button>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="email">
+                    <a href="mailto:thegamerk07@outlook.com">thegamerk07@outlook.com</a>
+                </div>
+                <div class="links">
+                    <span style="opacity: 0.6;">Socials</span>
+                    <a href="https://www.instagram.com/anythingforausername/" target="_blank">Instagram</a>
+                    <a href="https://www.snapchat.com/@anytngforausrnm" target="_blank">Snapchat</a>
+                    <a href="https://www.youtube.com/@anything_for_a_username" target="_blank">YouTube</a>
+                    <a href="https://www.tiktok.com/@anythingforausern" target="_blank">TikTok</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Photo Modal -->
+    <div class="photo-modal" id="photoModal">
+        <button class="modal-close" onclick="closePhotoModal()">×</button>
+        <div class="modal-content">
+            <img class="modal-image" id="modalImage" src="" alt="">
+            <div class="modal-description">
+                <h3 id="modalTitle">Photo Title</h3>
+                <p id="modalDesc">Photo description goes here...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Halftone canvas animation
+        const canvas = document.getElementById('halftone');
+        const ctx = canvas.getContext('2d');
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth * 0.6;
+            canvas.height = window.innerHeight;
+        }
+        
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        function drawHalftone() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const dotSize = 3;
+            const spacing = 6;
+            const time = Date.now() * 0.0005;
+            
+            for (let x = 0; x < canvas.width; x += spacing) {
+                for (let y = 0; y < canvas.height; y += spacing) {
+                    // Create horizontal ocean wave pattern
+                    const wave1 = Math.sin(y * 0.015 + time * 2);
+                    const wave2 = Math.sin(y * 0.025 + x * 0.008 + time * 1.5);
+                    const wave3 = Math.cos(y * 0.01 + time);
+                    
+                    const combinedWave = (wave1 + wave2 * 0.5 + wave3 * 0.3) / 1.8;
+                    const waveIntensity = (combinedWave + 1) / 2;
+                    
+                    // Vary dot size and opacity based on wave
+                    const size = dotSize * (0.3 + waveIntensity * 0.9);
+                    const alpha = 0.2 + waveIntensity * 0.5;
+                    
+                    // Blue gradient from light to dark
+                    const r = 0;
+                    const g = Math.floor(100 + waveIntensity * 150);
+                    const b = 255;
+                    
+                    ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
+                    ctx.beginPath();
+                    ctx.arc(x, y, size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+            
+            requestAnimationFrame(drawHalftone);
+        }
+        
+        drawHalftone();
+        
+        // Hobby window click handlers
+        const hobbyWindows = document.querySelectorAll('.hobby-window');
+        const mainContent = document.getElementById('main-content');
+        const blogSections = document.querySelectorAll('.blog-section');
+        
+        hobbyWindows.forEach(window => {
+            window.addEventListener('click', function() {
+                const hobby = this.getAttribute('data-hobby');
+                showBlog(hobby);
+            });
+        });
+        
+        function showBlog(hobby) {
+            mainContent.style.display = 'none';
+            blogSections.forEach(section => section.classList.remove('active'));
+            document.getElementById(`blog-${hobby}`).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function showMain() {
+            blogSections.forEach(section => section.classList.remove('active'));
+            mainContent.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Update Recent Photos gallery with most recent images from all hobbies
+        function updateRecentPhotos() {
+            const recentGallery = document.querySelector('.gallery-grid');
+            const allBlogImages = document.querySAll('.blog-image-item img');
+            
+            // Clear current gallery
+            recentGallery.innerHTML = '';
+            
+            // Collect all images from hobby blogs
+            const allImages = [];
+            document.querySelectorAll('.blog-image-grid').forEach(grid => {
+                const hobby = grid.getAttribute('data-hobby');
+                const images = grid.querySelectorAll('.blog-image-item');
+                images.forEach((img, index) => {
+                    if (img.querySelector('img')) {
+                        allImages.push({
+                            element: img.cloneNode(true),
+                            hobby: hobby,
+                            index: index
+                        });
+                    }
+                });
+            });
+            
+            // Get the 8 most recent images (or however many exist)
+            const recentImages = allImages.slice(-8).reverse();
+            
+            // Populate recent photos gallery
+            if (recentImages.length > 0) {
+                recentImages.forEach(imgData => {
+                    recentGallery.appendChild(imgData.element);
+                });
+            } else {
+                // Show placeholders if no images exist
+                for (let i = 1; i <= 8; i++) {
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'gallery-item';
+                    placeholder.textContent = `Photo ${i}`;
+                    recentGallery.appendChild(placeholder);
+                }
+            }
+        }
+        
+        // Call on page load
+        window.addEventListener('load', updateRecentPhotos);
+        
+        // Photo Modal Functions
+        function openPhotoModal(imageSrc, title, description) {
+            const modal = document.getElementById('photoModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDesc = document.getElementById('modalDesc');
+            
+            modalImage.src = imageSrc;
+            modalTitle.textContent = title;
+            modalDesc.textContent = description;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closePhotoModal() {
+            const modal = document.getElementById('photoModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal on background click
+        document.getElementById('photoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePhotoModal();
+            }
+        });
+        
+        // Close modal on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closePhotoModal();
+            }
+        });
+        
+        // Add click handlers to all blog images
+        function initializePhotoClicks() {
+            document.querySelectorAll('.blog-image-item, .gallery-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const img = this.querySelector('img');
+                    if (img) {
+                        const title = this.getAttribute('data-title') || 'Untitled Photo';
+                        const description = this.getAttribute('data-description') || 'No description available.';
+                        openPhotoModal(img.src, title, description);
+                    }
+                });
+            });
+        }
+        
+        // Initialize on load and after blog navigation
+        window.addEventListener('load', initializePhotoClicks);
+        
+        console.log('Digital Archive website loaded successfully! 🚀');
+    </script>
+</body>
+</html>
